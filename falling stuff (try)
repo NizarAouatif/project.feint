@@ -11,7 +11,7 @@ sound_resources = "app_resources/sound_resources/"
 width,height = 1280,600
 size = (width,height)
 
-ROCK_SPEED = 25
+ROCK_SPEED = 5
 clock = pygame.time.Clock()
 pygame.time.set_timer(USEREVENT+1, 1000)
 pygame.display.set_caption("GAME")
@@ -78,9 +78,9 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("لعبة ديال لقرد")
 background = GetSource().background("test.jpg")
 
-rock = "rock.png"
+#rock = "rock.png"
 
-rock = pygame.image.load(rock).convert()
+rock = pygame.image.load("rock.png").convert()
 rock = pygame.transform.scale(rock, (75, 75))
 
 player = GetSource().player("awesome.png").convert_alpha()
@@ -96,7 +96,7 @@ players = pygame.sprite.Group()
 coins = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 
-
+#rock="rock.png"
 
 wall_1 = Wall("white", 0, 0, width, 5)
 wall_2 = Wall("white", 0, 0, 5, height)
@@ -110,16 +110,17 @@ walls.add(wall_1,wall_2,wall_3,wall_4)
 players.add(player)
 coins.add(coin)
 coins.add(coin2)
+#coins.add(rock)
 all_sprites.add(wall_1,wall_2,wall_3,wall_4,player,coin,coin2)
 
 rock_x = random.randrange(0, width)
-rock_y = -25
+rock_y = 25
 
 screen.blit(rock, (20, 20))
 
 while True:
 
-    screen.blit(rock, (20, 20))
+    screen.blit(rock, (rock_x, rock_y))
     
     clock.tick(FPS)
 
@@ -208,7 +209,7 @@ while True:
         coin.rect.x = random.randint(0,width-coin_offset)
         coin.rect.y = random.randint(0,height-coin_offset)
 
-    rock_y += ROCK_SPEED
+    rock_y = rock_y + ROCK_SPEED
     
     if rock_y > height:
         rock_y = -25
@@ -220,7 +221,7 @@ while True:
     font = pygame.font.Font(None, 40)
     text = font.render(message, points, black)
     screen.blit(text, (10,10))                                 
-
+    screen.blit(rock, (rock_x, rock_y))
     all_sprites.draw(screen)
     all_sprites.update()
    
